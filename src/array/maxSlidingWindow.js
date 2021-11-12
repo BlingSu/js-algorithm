@@ -41,3 +41,33 @@ function calMax(arr, left, right) {
   }
   return maxNum;
 }
+
+
+
+/**
+ * @description 双端队列
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ * */
+
+const maxSlidingWindow = function (nums, k) {
+  const len = nums.length;
+  const res = [];
+  const deque = [];
+  for (let i = 0; i < len; i++) {
+    while (deque.length && nums[deque.length - 1] < nums[i]) {
+      deque.pop();
+    }
+    deque.push(i);
+    while (deque.length && deque[0] <= i - k) {
+      deque.shift();
+    }
+
+    if (i >= k - 1) {
+      res.push(nums[deque[0]]);
+    }
+  }
+
+  return res;
+}
